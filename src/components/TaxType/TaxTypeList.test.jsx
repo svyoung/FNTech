@@ -58,17 +58,4 @@ describe('Tax Type List', () => {
             expect(screen.getByLabelText('notification-wrapper')).toBeVisible();
         })
     });
-
-    // it('should sort', async () => {
-    //     await act(() => {
-    //         render(<TaxTypeList />);
-    //     })
-    //     await act(() => {
-    //         fireEvent.click(document.querySelector('.sortable-col'));
-    //     })
-    //     getData.mockResolvedValue(taxDataMock.data.reverse());
-    //     screen.debug();
-    //     expect(await screen.getAllByText(/Sales/i)).toBeTruthy();
-    //     expect(await screen.getAllByText(/Grat/i)).toBeTruthy();
-    // });
 })
