@@ -17,3 +17,8 @@ export const AddTaxTypeSpan = styled.span`
     text-transform: uppercase;
     font-size: 14px;
 `
+
+export const NoResultsWrapper = styled.div`
+    text-align: center;
+    padding: 100px;
+`;

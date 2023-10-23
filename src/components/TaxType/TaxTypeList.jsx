@@ -11,7 +11,7 @@ import { columns } from '../../storage/data';
 import { format } from 'date-fns';
 import { getData, sortTaxType, deleteTaxType } from "../../util/utils";
 import { AiOutlinePlusCircle } from 'react-icons/ai';
-import { AddTaxTypeWrapper, AddTaxTypeSpan } from './TaxTypeStyles';
+import { AddTaxTypeWrapper, AddTaxTypeSpan, NoResultsWrapper } from './TaxTypeStyles';
 import TaxAddEdit from './TaxAddEdit';
 import Alert from '../Alert/Alert';
 import ReactPaginate from 'react-paginate';
@@ -96,8 +96,9 @@ const TaxTypeList = () => {
                     <TableHeader columns={columns} onSort={onSort} />
                 </FlexWrapper>
                 <div>
-                {taxData?.data?.length > 0 &&
+                {taxData?.data?.length > 0 ?
                     taxData?.data?.map(type =>
+                        <>
                         <TableRow
                             onEdit={() => alert('Editing modal TBD')}
                             onDelete={onDelete}
@@ -110,20 +111,22 @@ const TaxTypeList = () => {
                             <TableSingleCell>{type.rate}</TableSingleCell>
                             <TableSingleCell>{type.tax_id}</TableSingleCell>
                         </TableRow>
+                        <div className="pagination">
+                            <ReactPaginate
+                                pageCount={totalPages}
+                                onPageChange={handlePageChange}
+                                forcePage={currentPage}
+                                previousLabel={'<'}
+                                nextLabel={'>'}
+                            />
+                        </div>
+                        </>
                     )
+                    :
+                    <NoResultsWrapper>No results found</NoResultsWrapper>
                 }
                 </div>
                 {addModalActive && <TaxAddEdit isEdit={false} onAddSubmit={onAdd} />}
-                <div className="pagination">
-                    <ReactPaginate
-                        pageCount={totalPages}
-                        onPageChange={handlePageChange}
-                        forcePage={currentPage}
-                        previousLabel={'<'}
-                        nextLabel={'>'}
-                    />
-                </div>
-                
             </TableWrapper>
         </>
     )
