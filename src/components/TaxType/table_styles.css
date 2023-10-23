@@ -1,0 +1,31 @@
+.pagination {
+    margin: 50px 0;
+}
+
+.pagination ul {
+    list-style-type: none;
+    display: flex;
+    margin: 0;
+    padding: 0;
+}
+
+.pagination ul li {
+    padding: 0 10px;
+    cursor: pointer;
+    margin: 0 3px;
+}
+
+.pagination ul li:hover {
+    border-radius: 5px;
+    background: #0b64c8;
+    color: #fff;
+}
+
+.pagination .selected {
+    color: #0b64c8;
+    font-weight: bold;
+    background: #0b64c8;
+    color: #fff;
+    border-radius: 5px;
+    cursor: auto;
+}

@@ -1,23 +1,23 @@
-import logo from './logo.svg';
 import './App.css';
+import TaxTypeList from './components/TaxType/TaxTypeList';
+import styled from 'styled-components';
 
-function App() {
+const ContentWrapper = styled.div`
+  width: 90%;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+`
+
+const App = () => {
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+        <h1 className="fn-title">FNTECH</h1>
       </header>
+      <ContentWrapper>
+        <TaxTypeList />
+      </ContentWrapper>
     </div>
   );
 }
