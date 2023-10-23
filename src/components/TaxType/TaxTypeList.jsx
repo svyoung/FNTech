@@ -97,8 +97,8 @@ const TaxTypeList = () => {
                 </FlexWrapper>
                 <div>
                 {taxData?.data?.length > 0 ?
-                    taxData?.data?.map(type =>
-                        <>
+                    <>
+                    {taxData?.data?.map(type =>
                         <TableRow
                             onEdit={() => alert('Editing modal TBD')}
                             onDelete={onDelete}
@@ -111,17 +111,17 @@ const TaxTypeList = () => {
                             <TableSingleCell>{type.rate}</TableSingleCell>
                             <TableSingleCell>{type.tax_id}</TableSingleCell>
                         </TableRow>
-                        <div className="pagination">
-                            <ReactPaginate
-                                pageCount={totalPages}
-                                onPageChange={handlePageChange}
-                                forcePage={currentPage}
-                                previousLabel={'<'}
-                                nextLabel={'>'}
-                            />
-                        </div>
-                        </>
-                    )
+                    )}
+                    <div className="pagination">
+                        <ReactPaginate
+                            pageCount={totalPages}
+                            onPageChange={handlePageChange}
+                            forcePage={currentPage}
+                            previousLabel={'<'}
+                            nextLabel={'>'}
+                        />
+                    </div>
+                    </>
                     :
                     <NoResultsWrapper>No results found</NoResultsWrapper>
                 }
