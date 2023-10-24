@@ -44,8 +44,9 @@ const TaxAddEdit = ({ data, isEdit = false, onAddSubmit, onEditSubmit, onModalCl
                 // error
                 onAddSubmit("error");
             }
+            closeModal();
         }
-        closeModal();
+
     };
 
     const closeModal = () => {
