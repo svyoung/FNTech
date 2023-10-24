@@ -24,6 +24,23 @@ This should be viewable on [http://localhost:3000](http://localhost:3000) to vie
   - Pagination isn't smooth with sorting
   - Form validation could be improved (serializing values)
 
+### Demo Images
+
+#### Pagination
+![Alt text](./demo/fntech_pagination.gif)
+
+#### Sorting
+![Alt text](./demo/fntech_sorting.gif)
+
+#### Add tax type
+![Alt text](./demo/fntech_add.gif)
+
+#### Edit tax type
+![Alt text](./demo/fntech_edit.gif)
+
+#### Delete tax type
+![Alt text](./demo/fntech_delete.gif)
+
 ### `npm run test`
 
 For testing suites.
