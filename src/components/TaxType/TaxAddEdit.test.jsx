@@ -79,4 +79,87 @@ describe('Tax Add/Edit', () => {
             expect(onAddSubmit).toHaveBeenCalled();
         });
     });
+
+    it('should edit tax type', async () => {
+        const data = {
+            id: 44,
+            name: "example",
+            tax_id: "example",
+            rate: 334
+        }
+        global.fetch = jest.fn(() => Promise.resolve({
+            json: () => Promise.resolve({ name: "AAA", tax_id: "AAA" })
+        }));
+        const onEditSubmit = jest.fn();
+        const { getByText, getAllByLabelText } = render(<TaxAddEdit isEdit={true} data={data} onEditSubmit={onEditSubmit} />);
+        const nameField = getAllByLabelText('input-field')[0];
+        const taxIdField = getAllByLabelText('input-field')[1];
+        const rateField = getAllByLabelText('input-field')[2];
+        fireEvent.change(nameField, { target: { value: 'AAA' } });
+        fireEvent.change(taxIdField, { target: { value: 'AAA' } });
+        fireEvent.change(rateField, { target: { value: 4 }});
+        const editButton = getByText('Edit');
+        fireEvent.click(editButton);
+
+        await waitFor(() => {
+            expect(onEditSubmit).toHaveBeenCalled();
+        });
+    });
+
+    it('should validate input fields on Edit - name', () => {
+        const data = {
+            id: 44,
+            name: "example",
+            tax_id: "example",
+            rate: 334
+        }
+        global.fetch = jest.fn(() => Promise.resolve({
+            json: () => Promise.resolve({ name: "AAA", tax_id: "AAA" })
+        }));
+        const onEditSubmit = jest.fn();
+        const { getByText, getAllByLabelText, getByLabelText } = render(<TaxAddEdit isEdit={true} data={data} onEditSubmit={onEditSubmit} />);
+        const nameField = getAllByLabelText('input-field')[0];
+        fireEvent.change(nameField, { target: { value: '' } });
+        const addButton = getByLabelText('primary-button');
+        fireEvent.click(addButton);
+        expect(getByText("Name cannot be empty")).toBeVisible();
+    });
+
+    it('should validate input fields on Edit - tax ID', () => {
+        const data = {
+            id: 44,
+            name: "example",
+            tax_id: "example",
+            rate: 334
+        }
+        global.fetch = jest.fn(() => Promise.resolve({
+            json: () => Promise.resolve({ name: "AAA", tax_id: "AAA" })
+        }));
+        const onEditSubmit = jest.fn();
+        const { getByText, getAllByLabelText, getByLabelText } = render(<TaxAddEdit isEdit={true} data={data} onEditSubmit={onEditSubmit} />);
+        const nameField = getAllByLabelText('input-field')[1];
+        fireEvent.change(nameField, { target: { value: '' } });
+        const addButton = getByLabelText('primary-button');
+        fireEvent.click(addButton);
+        expect(getByText("Tax ID cannot be empty")).toBeVisible();
+    });
+
+    it('should validate input fields on Edit - rate', () => {
+        const data = {
+            id: 44,
+            name: "example",
+            tax_id: "example",
+            rate: 334
+        }
+        global.fetch = jest.fn(() => Promise.resolve({
+            json: () => Promise.resolve({ name: "AAA", tax_id: "AAA" })
+        }));
+        const onEditSubmit = jest.fn();
+        const { getByText, getAllByLabelText, getByLabelText } = render(<TaxAddEdit isEdit={true} data={data} onEditSubmit={onEditSubmit} />);
+        const nameField = getAllByLabelText('input-field')[2];
+        fireEvent.change(nameField, { target: { value: '0' } });
+        const addButton = getByLabelText('primary-button');
+        fireEvent.click(addButton);
+        expect(getByText("Number must be greater than 0")).toBeVisible();
+    });
 });

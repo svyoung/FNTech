@@ -1,5 +1,10 @@
 import styled, { keyframes } from 'styled-components';
 
+export const FlexWrapper = styled.div`
+    display: flex;
+    border-bottom: 1px solid #e9e9e9;
+`;
+
 export const TableWrapper = styled.div`
     display: block;
     padding: 20px;
@@ -70,7 +75,6 @@ export const TableRowWrapper = styled.div`
     padding: 22px 0;
     justify-content: space-evenly;
     width: 100%;
-    border-bottom: 1px solid #e9e9e9;
     transition: all 0.1s ease-out;
     &:hover {
         box-shadow: 0px 1px 20px 1px rgba(0, 0, 0, 0.1);

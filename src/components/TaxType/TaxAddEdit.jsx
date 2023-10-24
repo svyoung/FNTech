@@ -3,7 +3,7 @@ import Modal from '../Modal/Modal';
 import Input from '../Input/Input';
 import { LabelField } from './TaxAddEditStyles';
 import { FlexWrapper } from '../GlobalStyles';
-import { addTaxType } from '../../util/utils';
+import { addTaxType, editTaxType } from '../../util/utils';
 
 let initValidationError = {
     name: "",
@@ -11,12 +11,13 @@ let initValidationError = {
     rate: ""
 }
 
-const TaxAddEdit = ({ data, isEdit = false, onAddSubmit }) => {
-    const [name, setName] = useState("");
-    const [taxId, setTaxId] = useState("");
-    const [rate, setRate] = useState(1);
+const TaxAddEdit = ({ data, isEdit = false, onAddSubmit, onEditSubmit, onModalClose }) => {
+    const [actionType, setActionType] = useState(isEdit ? "Edit" : "Add");
+    const [name, setName] = useState(isEdit ? data?.name : "");
+    const [taxId, setTaxId] = useState(isEdit ? data?.tax_id : "");
+    const [rate, setRate] = useState(isEdit ? data?.rate : 1);
     const [validated, setValidated] = useState(initValidationError);
-
+    
     const onAddTaxType = async () => {
         /**
          * Hacky validation due to time limitation
@@ -44,17 +45,46 @@ const TaxAddEdit = ({ data, isEdit = false, onAddSubmit }) => {
                 onAddSubmit("error");
             }
         }
+        closeModal();
     };
 
-    const onEditTaxType = () => {
-        // TODO
+    const closeModal = () => {
+        onModalClose && onModalClose();
+    }
+
+    const onEditTaxType = async () => {
+        if (name === "" || taxId === "" || rate < 1) {
+            setValidated({
+                name: name === "" ? "Name cannot be empty" : "",
+                taxId: taxId === "" ? "Tax ID cannot be empty" : "",
+                rate:  rate < 1 ? "Number must be greater than 0" : ""
+            });
+        } else {
+            setValidated(initValidationError);
+            const editResponse = await editTaxType({
+                name,
+                tax_id: taxId,
+                rate,
+                id: data.id
+            });
+
+            // checking if the response object created matches the item
+            if (editResponse?.name === name && editResponse?.tax_id === taxId) {
+                // success
+                onEditSubmit("success");
+            } else {
+                // error
+                onEditSubmit("error");
+            }
+        }
+        closeModal();
     }
 
     return (
             <Modal
-                header="Add Tax Type"
-                onModalClose={onAddSubmit}
-                buttons={{primaryClick: onAddTaxType, primaryText: "Add", secondaryClick: onAddSubmit, secondaryText: "Cancel", warning: false}}
+                header={`${actionType} Tax Type`}
+                onModalClose={closeModal}
+                buttons={{primaryClick: (isEdit ? onEditTaxType : onAddTaxType), primaryText: (isEdit? "Edit" : "Add"), secondaryClick: closeModal, secondaryText: "Cancel", warning: false}}
             >
                 <FlexWrapper style={{marginBottom: "10px", overflow: "hidden"}}>
                     <LabelField>Name*:</LabelField> 

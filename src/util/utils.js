@@ -30,6 +30,24 @@ export const addTaxType = async (taxTypeItem) => {
     }
 }
 
+export const editTaxType = async (updatedTaxItem) => {
+    try {
+        const response = await fetch(`${baseApi}${endpoint}${updatedTaxItem.id}`, {
+            method: 'PUT',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+              },
+            body: JSON.stringify(updatedTaxItem)
+        });
+        const data = response.json();
+        return data;
+    } catch(e) {
+        console.log(e);
+        return null;
+    }
+}
+
 export const deleteTaxType = async (taxItemId) => {
     try {
         const response = await fetch(`${baseApi}${endpoint}${taxItemId}`, {
@@ -57,6 +75,7 @@ export const sortTaxType = async (field, order, pageNum, perPage) => {
 const utils = {
     getData,
     addTaxType,
+    editTaxType,
     deleteTaxType,
     sortTaxType
 }

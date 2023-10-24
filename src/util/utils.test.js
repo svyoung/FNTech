@@ -1,6 +1,7 @@
 import {
     getData,
     addTaxType,
+    editTaxType,
     deleteTaxType,
     sortTaxType
 } from './utils';
@@ -61,7 +62,26 @@ describe('addTaxType', () => {
         const response = await addTaxType(taxItem);
         expect(response).toBe(null);
     });
-})
+});
+
+describe('editTaxType', () => {
+
+    it('should throw error', async () => {
+        global.fetch = jest.fn(() => Promise.reject({
+            json: () => Promise.reject(null)
+        }));
+
+        const taxItem = {
+            tax_id: "sdfdsf",
+            name: "examplsdfdsfe",
+            rate: 233,
+            id: 22
+        }
+
+        const response = await editTaxType(taxItem);
+        expect(response).toBe(null);
+    });
+});
 
 describe('deleteTaxType', () => {
     it('should delete type', async () => {
@@ -79,7 +99,7 @@ describe('deleteTaxType', () => {
         expect(response).toBe(null);
     });
 
-})
+});
 
 describe('sortTaxType', () => {
     it('should sort type', async () => {

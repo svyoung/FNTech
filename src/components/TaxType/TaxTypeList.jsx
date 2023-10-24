@@ -65,7 +65,6 @@ const TaxTypeList = () => {
     }
 
     const onAdd = status => {
-        setAddModalActive(false);
         if (status === "success") {
             setAlertVisible(true);
             setAlertType("success");
@@ -77,14 +76,26 @@ const TaxTypeList = () => {
         }
     }
 
+    const onEdit = status => {
+        if (status === "success") {
+            setAlertVisible(true);
+            setAlertType("success");
+            setAlertMessage("Successfully edited tax type!")
+        } else if (status === "error") {
+            setAlertVisible(true);
+            setAlertType("danger");
+            setAlertMessage("Sorry, something went wrong. Please try again later.")
+        }
+    }
+
     const onClose = () => {
-        setAlertVisible(false);
+        setAddModalActive(false);
     }
 
     return (
         <>
             <TableWrapper>
-                {alertVisible && <Alert type={alertType} onClose={onClose}>{alertMessage}</Alert>}
+                {alertVisible && <Alert type={alertType} onClose={() => setAlertVisible(false)}>{alertMessage}</Alert>}
                 <FlexWrapper>
                     <AddTaxTypeWrapper onClick={() => setAddModalActive(true)} aria-label="add-tax-type">
                         <AiOutlinePlusCircle size={15} />&nbsp;<AddTaxTypeSpan>Tax Type
@@ -100,10 +111,11 @@ const TaxTypeList = () => {
                     <>
                     {taxData?.data?.map(type =>
                         <TableRow
-                            onEdit={() => alert('Editing modal TBD')}
+                            onEdit={onEdit}
                             onDelete={onDelete}
                             data={type}
                             key={type.onEdit}
+                            onClose={onClose}
                         >
                             <TableSingleCell>{type.id}</TableSingleCell>
                             <TableSingleCell>{format(new Date(type.created * 1000), 'yyyy/M/d H:M:S')}</TableSingleCell>
@@ -126,7 +138,7 @@ const TaxTypeList = () => {
                     <NoResultsWrapper>No results found</NoResultsWrapper>
                 }
                 </div>
-                {addModalActive && <TaxAddEdit isEdit={false} onAddSubmit={onAdd} />}
+                {addModalActive && <TaxAddEdit isEdit={false} onAddSubmit={onAdd} onModalClose={onClose} />}
             </TableWrapper>
         </>
     )

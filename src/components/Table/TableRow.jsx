@@ -2,13 +2,14 @@ import React, { useEffect, useState } from 'react';
 import {
     TableRowWrapper,
     EditCell,
-    ActionCell
+    ActionCell,
+    FlexWrapper
 } from './TableStyles';
-import { FlexWrapper } from '../GlobalStyles';
 import { HiPencilAlt, HiTrash } from 'react-icons/hi';
 import Modal from '../Modal/Modal';
+import TaxAddEdit from '../TaxType/TaxAddEdit';
 
-const TableRow = ({ children, data, onEdit, onDelete }) => {
+const TableRow = ({ children, data, onEdit, onDelete, onClose }) => {
     const [hoverActive, setHoverActive] = useState(false);
     const [modalDeleteActive, setModalDeleteActive] = useState(false);
     const [modalEditActive, setModalEditActive] = useState(false);
@@ -22,13 +23,13 @@ const TableRow = ({ children, data, onEdit, onDelete }) => {
     }
 
     const onModalClose = () => {
+        onClose && onClose();
         setModalEditActive(false);
         setModalDeleteActive(false);
     }
 
-    const editAction = (id) => {
-        // TODO
-        onEdit();
+    const editAction = status => {
+        onEdit(status);
     }
 
     return (
@@ -71,13 +72,7 @@ const TableRow = ({ children, data, onEdit, onDelete }) => {
                 </Modal>
             }
             {modalEditActive &&
-                <Modal 
-                header="Edit tax type" 
-                buttons={{primaryClick: () => editAction(data.id), primaryText: "Edit", secondaryClick: onModalClose, secondaryText: "Cancel", warning: false}}
-                onModalClose={onModalClose}
-            >
-                Edit this tax type TBD
-            </Modal>
+                <TaxAddEdit data={data} isEdit={true} onEditSubmit={editAction} onModalClose={onModalClose} />
             }
         </FlexWrapper>
     )

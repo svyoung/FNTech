@@ -11,7 +11,7 @@ const Input = ({ text, inputType, onChange, placeholder, disabled = false, error
                     <ErrorMessage>{errorMessage}</ErrorMessage>
                 </>   
                 :
-                <InputField type={inputType} onChange={(e) => onChange(e.target.value)} value={text} placeholder={placeholder || ""} aria-label="input-field" />
+                <InputField type={inputType} onChange={(e) => onChange(e.target.value)} value={text} placeholder={placeholder || ""} aria-label="input-field" disabled={disabled} />
             }
             </div>
             
